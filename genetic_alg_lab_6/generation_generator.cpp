@@ -1,6 +1,6 @@
 #include "generation_generator.h"
 
-#include "utilities.h"
+#include "random.h"
 
 #include <map>
 
@@ -59,7 +59,7 @@ void GenerationGenerator::toNextGeneration()
 
 	for (auto& item : orderedAllBaskets)
 	{
-		if (!utilities::randomTrue(_mutationChange))
+		if (!random::randomTrue(_mutationChange))
 			continue;
 
 		auto mutatedBasket = item.second.mutate(_mutationChange);
@@ -83,11 +83,11 @@ std::list<Basket> GenerationGenerator::generateNextGeneration() const
 
 	while (generatingGeneration.size() < _generatingGenerationSize)
 	{
-		uint firstIndex = utilities::randomInRange(0, _currentGeneration.size() - 1);
+		uint firstIndex = random::randomInRange(0, (int)_currentGeneration.size() - 1);
 		uint secondIndex = firstIndex;
 
 		while (secondIndex == firstIndex) 
-			secondIndex = utilities::randomInRange(0, _currentGeneration.size() - 1);
+			secondIndex = random::randomInRange(0, (int)_currentGeneration.size() - 1);
 
 		auto& firstBasket = atIndex(_currentGeneration, firstIndex);
 		auto& secondBasket = atIndex(_currentGeneration, secondIndex);

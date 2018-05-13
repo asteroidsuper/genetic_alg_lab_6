@@ -1,5 +1,7 @@
 #include "generation_generator.h"
 
+#include "random.h"
+
 #include <iostream>
 
 void printBasket(const Basket& basket)
@@ -20,27 +22,39 @@ void printBasket(const Basket& basket)
 
 int main(int argc, char *argv[])
 {
+	random::setRandomSeed(256);
+
 	GenerationGenerator generator;
 
 	generator.generateRandomGeneration();
 
-	std::cout << "First generation best utility: " << generator.theBest().utility() << std::endl;
+	double curBestUtility = generator.theBest().utility();
 
-	while (true)
+	std::cout << "First generation best utility: " << curBestUtility  << std::endl;
+
+	const uint bestUtilityTimeToBreak = 100;
+
+	uint curBestUtilityTime = 0;
+
+	uint generatedGenerationCount = 1;
+
+	while (curBestUtilityTime < bestUtilityTimeToBreak)
 	{
-		char generateNext;
-
-		std::cout << "Insert Y to generate next generation" << std::endl;
-
-		std::cin >> generateNext;
-
-		if (generateNext != 'y')
-			break;
-
 		generator.toNextGeneration();
 		
-		std::cout << "Next generation best utility: " << generator.theBest().utility() << std::endl;
+		generatedGenerationCount++;
+
+		auto bestUtility = generator.theBest().utility();
+
+		curBestUtilityTime++;
+
+		if (bestUtility != curBestUtility) {
+			curBestUtility = bestUtility;
+			curBestUtilityTime = 0;
+		}
 	}
+
+	std::cout << "Generated generation count: " << generatedGenerationCount << std::endl << std::endl;
 
 	printBasket(generator.theBest());
 

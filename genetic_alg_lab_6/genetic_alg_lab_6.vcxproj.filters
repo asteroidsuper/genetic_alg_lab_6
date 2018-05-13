@@ -27,7 +27,7 @@
     <ClInclude Include="product.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="utilities.h">
+    <ClInclude Include="random.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClCompile Include="product.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="utilities.cpp">
+    <ClCompile Include="random.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

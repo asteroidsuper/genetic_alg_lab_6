@@ -1,6 +1,6 @@
 #include "basket.h"
 
-#include "utilities.h"
+#include "random.h"
 
 #define NAME_OF(token) #token
 
@@ -8,7 +8,7 @@ uint mutatedNumber(uint number)
 {
 	int num = number;
 
-	num += utilities::randomInRange(-5, 5);
+	num += random::randomInRange(-5, 5);
 
 	return std::abs(num);
 }
@@ -51,7 +51,7 @@ Basket Basket::crossBaskets(const Basket & first, const Basket & second)
 
 	for (; firstIter != firstEnd && secondIter != secondEnd; firstIter++, secondIter++)
 	{
-		auto& selectedItem = utilities::randomTrue(0.5)? *firstIter : *secondIter;
+		auto& selectedItem = random::randomTrue(0.5)? *firstIter : *secondIter;
 
 		items.push_back(selectedItem);
 	}
@@ -109,7 +109,7 @@ Basket Basket::mutate(double change) const
 
 	for (auto& item : _items)
 	{
-		if (utilities::randomTrue(change)) {
+		if (random::randomTrue(change)) {
 			newItems.push_back(Item(item.product, mutatedNumber(item.count)));
 		}
 		else {
