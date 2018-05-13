@@ -1,29 +1,25 @@
-#include <QtCore/QCoreApplication>
-
 #include "generation_generator.h"
 
 #include <iostream>
 
 void printBasket(const Basket& basket)
 {
-	std::wcout << "Basket contains: " << std::endl;
+	std::cout << "Basket contains: " << std::endl;
 
 	auto items = basket.items();
 
 	for (auto& item : items)
 	{
-		std::wcout << item.product.name().toStdWString() << ": " << item.count << std::endl;
+		std::cout << item.product.name() << ": " << item.count << std::endl;
 	}
 
-	std::wcout << std::endl << "Utility: " << basket.utility() << std::endl;
-	std::wcout << "Cost: " << basket.cost() << std::endl;
-	std::wcout << "Weight: " << basket.weight() << std::endl;
+	std::cout << std::endl << "Utility: " << basket.utility() << std::endl;
+	std::cout << "Cost: " << basket.cost() << std::endl;
+	std::cout << "Weight: " << basket.weight() << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
-	QCoreApplication a(argc, argv);
-
 	GenerationGenerator generator;
 
 	generator.generateRandomGeneration();
@@ -34,7 +30,7 @@ int main(int argc, char *argv[])
 	{
 		char generateNext;
 
-		std::cout << "Press Y to generate next generation" << std::endl;
+		std::cout << "Insert Y to generate next generation" << std::endl;
 
 		std::cin >> generateNext;
 
@@ -48,5 +44,11 @@ int main(int argc, char *argv[])
 
 	printBasket(generator.theBest());
 
-	return a.exec();
+	std::cout << "Insert any text and press enter to exit from program: ";
+
+	std::string end;
+
+	std::cin >> end;
+
+	return 0;
 }

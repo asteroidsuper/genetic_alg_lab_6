@@ -9,7 +9,7 @@ class GenerationGenerator
 
 	double _mutationChange = 0.05;
 
-	QList<Basket> _currentGeneration;
+	std::list<Basket> _currentGeneration;
 
 	uint _startProductCount = 0;
 	uint _endProductsCount = 10;
@@ -23,12 +23,12 @@ public:
 
 	void toNextGeneration();
 
-	QList<Basket> currentGeneration() const;
+	std::list<Basket> currentGeneration() const;
 
 	Basket theBest() const;
 
 private:
 	bool isInLimit(const Basket& basket) const;
 
-	QList<Basket> generateNextGeneration() const;
+	std::list<Basket> generateNextGeneration() const;
 };

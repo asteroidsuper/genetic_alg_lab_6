@@ -1,6 +1,6 @@
 #include "product.h"
 
-const QString& Product::name() const
+std::string Product::name() const
 {
 	return _name;
 }
@@ -28,9 +28,9 @@ double Product::weight() const
 	return _weight;
 }
 
-const QList<Product>& Product::defaultProducts()
+const std::list<Product>& Product::defaultProducts()
 {
-    static QList<Product> products
+    static std::list<Product> products
     {//         lstart  k       cost    weight  name
         Product(10,     0.6,    49,     1,      "Milk"),
         Product(5,      0.7,    1,      0.6,    "Bread"),

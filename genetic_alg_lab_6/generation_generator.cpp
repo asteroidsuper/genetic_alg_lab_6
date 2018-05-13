@@ -4,6 +4,26 @@
 
 #include <map>
 
+template<class ContainerT>
+auto& atIndex(ContainerT& container, size_t index)
+{
+	auto iter = std::begin(container);
+
+	std::advance(iter, index);
+
+	return *iter;
+}
+
+template<class ContainerT>
+const auto& atIndex(const ContainerT& container, size_t index)
+{
+	auto iter = std::cbegin(container);
+
+	std::advance(iter, index);
+
+	return *iter;
+}
+
 bool basketLess(const Basket& a, const Basket& b)
 {
 	return a.utility() < b.utility();
@@ -13,12 +33,12 @@ void GenerationGenerator::generateRandomGeneration()
 {
 	_currentGeneration.clear();
 
-	while (_currentGeneration.count() < _generationSize)
+	while (_currentGeneration.size() < _generationSize)
 	{
 		auto basket = Basket::generateRandomBasket(_startProductCount, _endProductsCount);
 
 		if (isInLimit(basket))
-			_currentGeneration << basket;
+			_currentGeneration.push_back(basket);
 	}
 }
 
@@ -51,37 +71,37 @@ void GenerationGenerator::toNextGeneration()
 	_currentGeneration.clear();
 
 	for (auto& mapItem : orderedAllBaskets)
-		_currentGeneration << mapItem.second;
+		_currentGeneration.push_back(mapItem.second);
 }
 
-QList<Basket> GenerationGenerator::generateNextGeneration() const
+std::list<Basket> GenerationGenerator::generateNextGeneration() const
 {
-	if (_currentGeneration.count() < 2)
+	if (_currentGeneration.size() < 2)
 		return { };
 
-	QList<Basket> generatingGeneration;
+	std::list<Basket> generatingGeneration;
 
-	while (generatingGeneration.count() < _generatingGenerationSize)
+	while (generatingGeneration.size() < _generatingGenerationSize)
 	{
-		uint firstIndex = utilities::randomInRange(0, _currentGeneration.count() - 1);
+		uint firstIndex = utilities::randomInRange(0, _currentGeneration.size() - 1);
 		uint secondIndex = firstIndex;
 
 		while (secondIndex == firstIndex) 
-			secondIndex = utilities::randomInRange(0, _currentGeneration.count() - 1);
+			secondIndex = utilities::randomInRange(0, _currentGeneration.size() - 1);
 
-		auto& firstBasket = _currentGeneration[firstIndex];
-		auto& secondBasket = _currentGeneration[secondIndex];
+		auto& firstBasket = atIndex(_currentGeneration, firstIndex);
+		auto& secondBasket = atIndex(_currentGeneration, secondIndex);
 
 		auto basket = Basket::crossBaskets(firstBasket, secondBasket);
 
 		if (isInLimit(basket))
-			generatingGeneration << basket;
+			generatingGeneration.push_back(basket);
 	}
 
 	return generatingGeneration;
 }
 
-QList<Basket> GenerationGenerator::currentGeneration() const
+std::list<Basket> GenerationGenerator::currentGeneration() const
 {
 	return _currentGeneration;
 }

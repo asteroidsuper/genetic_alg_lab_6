@@ -25,14 +25,14 @@ public:
 		uint count;
 	};
 
-	QList<Item> items() const;
+	std::list<Item> items() const;
 
 	static Basket generateRandomBasket(uint startProducts, uint endProducts);
 
 	static Basket crossBaskets(const Basket& fisrt, const Basket& second);
 
 private:
-	Basket(const QList<Item>& items);
+	Basket(std::list<Item>&& items);
 
-	QList<Item> _items;
+	std::list<Item> _items;
 };

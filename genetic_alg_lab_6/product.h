@@ -6,10 +6,10 @@ class Product /// This is gen
 	double _k;
 	uint _cost;
 	double _weight; // in kg
-	QString _name;
+	std::string _name;
 
 public:
-	Product(double lstart, double k, uint cost, double weight, const QString& name)
+	Product(double lstart, double k, uint cost, double weight, const std::string& name)
 		: _lstart(lstart)
 		, _k(k)
 		, _cost(cost)
@@ -21,7 +21,7 @@ public:
 	uint cost() const;
 	double weight() const;
 
-	const QString& name() const;
+	std::string name() const;
 
-	static const QList<Product>& defaultProducts();
+	static const std::list<Product>& defaultProducts();
 };

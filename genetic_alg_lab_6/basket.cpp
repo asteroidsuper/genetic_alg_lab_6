@@ -2,8 +2,6 @@
 
 #include "utilities.h"
 
-#include <QtCore/QRandomGenerator>
-
 #define NAME_OF(token) #token
 
 uint mutatedNumber(uint number)
@@ -15,7 +13,7 @@ uint mutatedNumber(uint number)
 	return std::abs(num);
 }
 
-QList<Basket::Item> Basket::items() const
+std::list<Basket::Item> Basket::items() const
 {
 	return _items;
 }
@@ -33,31 +31,35 @@ Basket Basket::generateRandomBasket(uint startProducts, uint endProducts)
 
 	auto& products = Product::defaultProducts();
 
-	QList<Item> productItems;
+	std::list<Item> productItems;
 
 	for (auto& product : products)
-		productItems << Item(product, randFunc());
+		productItems.push_back(Item(product, randFunc()));
 
-	return Basket(productItems);
+	return Basket(std::move(productItems));
 }
 
 Basket Basket::crossBaskets(const Basket & first, const Basket & second)
 {
-	QList<Item> items;
+	std::list<Item> items;
 
-	uint count = std::min(first._items.count(), second._items.count());
+	auto firstIter = first._items.cbegin();
+	auto firstEnd = first._items.cend();
 
-	for (uint i = 0; i < count; ++i)
+	auto secondIter = second._items.cbegin();
+	auto secondEnd = second._items.cend();
+
+	for (; firstIter != firstEnd && secondIter != secondEnd; firstIter++, secondIter++)
 	{
-		auto& copyFrom = utilities::randomTrue(0.5)? first : second;
+		auto& selectedItem = utilities::randomTrue(0.5)? *firstIter : *secondIter;
 
-		items << copyFrom._items[i];
+		items.push_back(selectedItem);
 	}
 
-	return Basket(items);
+	return Basket(std::move(items));
 }
 
-Basket::Basket(const QList<Item>& items) : _items(items)
+Basket::Basket(std::list<Item>&& items) : _items(std::move(items))
 { }
 
 Basket::Basket() { }
@@ -103,17 +105,17 @@ Basket Basket::mutate(double change) const
 	if (change < 0 || change > 1)
 		throw std::runtime_error("Value of \"" NAME_OF(change) "\" must be inside range [0.1]");
 
-	QList<Item> newItems;
+	std::list<Item> newItems;
 
 	for (auto& item : _items)
 	{
 		if (utilities::randomTrue(change)) {
-			newItems << Item(item.product, mutatedNumber(item.count));
+			newItems.push_back(Item(item.product, mutatedNumber(item.count)));
 		}
 		else {
-			newItems << item;
+			newItems.push_back(item);
 		}
 	}
 
-	return Basket(newItems);
+	return Basket(std::move(newItems));
 }
