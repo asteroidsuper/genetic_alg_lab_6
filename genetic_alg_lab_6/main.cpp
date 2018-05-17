@@ -49,8 +49,6 @@ int main(int argc, char *argv[])
 
 	GeneticEngine engine;
 
-	engine.generateRandomGeneration();
-
 	double curBestUtility = engine.theBest().utility();
 
 	std::cout << std::endl;

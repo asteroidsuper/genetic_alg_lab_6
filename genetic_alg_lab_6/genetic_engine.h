@@ -11,7 +11,7 @@ class GeneticEngine
 
 	std::list<Basket> _currentGeneration;
 
-	uint _startProductCount = 0;
+	uint _startProductsCount = 0;
 	uint _endProductsCount = 10;
 
 	uint _costLimit = 2000;
@@ -19,7 +19,7 @@ class GeneticEngine
 	double _weightLimit = 15;
 
 public:
-	void generateRandomGeneration();
+	GeneticEngine();
 
 	void toNextGeneration();
 

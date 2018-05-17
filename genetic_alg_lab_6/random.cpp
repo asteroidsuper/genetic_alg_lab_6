@@ -15,17 +15,12 @@ double randomDouble()
 	return dist(randomGenerator());
 }
 
-void random::setRandomSeed(uint seed)
-{
-	auto& generator = randomGenerator();
-	generator.seed(seed);
-}
-
 void random::setRandomSeed(const std::string & seed)
 {
 	std::seed_seq seedSeq(seed.cbegin(), seed.cend());
 
-	randomGenerator().seed(seedSeq);
+	auto& generator = randomGenerator();
+	generator.seed(seedSeq);
 }
 
 bool random::randomTrue(double change)

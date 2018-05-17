@@ -29,13 +29,11 @@ bool basketLess(const Basket& a, const Basket& b)
 	return a.utility() < b.utility();
 }
 
-void GeneticEngine::generateRandomGeneration()
-{
-	_currentGeneration.clear();
-
+GeneticEngine::GeneticEngine()
+{	
 	while (_currentGeneration.size() < _generationSize)
 	{
-		auto basket = Basket::generateRandomBasket(_startProductCount, _endProductsCount);
+		auto basket = Basket::generateRandomBasket(_startProductsCount, _endProductsCount);
 
 		if (isInLimit(basket))
 			_currentGeneration.push_back(basket);
