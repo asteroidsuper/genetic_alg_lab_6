@@ -124,14 +124,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="basket.h" />
-    <ClInclude Include="generation_generator.h" />
+    <ClInclude Include="genetic_engine.h" />
     <ClInclude Include="product.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="basket.cpp" />
-    <ClCompile Include="generation_generator.cpp" />
+    <ClCompile Include="genetic_engine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="product.cpp" />
     <ClCompile Include="stdafx.cpp">

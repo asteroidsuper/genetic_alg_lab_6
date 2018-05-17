@@ -1,4 +1,4 @@
-#include "generation_generator.h"
+#include "genetic_engine.h"
 
 #include "random.h"
 
@@ -20,17 +20,30 @@ void printBasket(const Basket& basket)
 	std::cout << "Weight: " << basket.weight() << std::endl;
 }
 
+double averageUtility(const GeneticEngine& engine)
+{
+	double utilitySum = 0;
+
+	auto generation = engine.currentGeneration();
+
+	for (auto& basket : generation)
+		utilitySum += basket.utility();
+
+	return utilitySum / generation.size();
+}
+
 int main(int argc, char *argv[])
 {
 	random::setRandomSeed(256);
 
-	GenerationGenerator generator;
+	GeneticEngine engine;
 
-	generator.generateRandomGeneration();
+	engine.generateRandomGeneration();
 
-	double curBestUtility = generator.theBest().utility();
+	double curBestUtility = engine.theBest().utility();
 
-	std::cout << "First generation best utility: " << curBestUtility  << std::endl;
+	std::cout << "First generation best utility: " << curBestUtility << std::endl;
+	std::cout << "Average utility: " << averageUtility(engine) << std::endl;
 
 	const uint bestUtilityTimeToBreak = 100;
 
@@ -40,11 +53,11 @@ int main(int argc, char *argv[])
 
 	while (curBestUtilityTime < bestUtilityTimeToBreak)
 	{
-		generator.toNextGeneration();
+		engine.toNextGeneration();
 		
 		generatedGenerationCount++;
 
-		auto bestUtility = generator.theBest().utility();
+		auto bestUtility = engine.theBest().utility();
 
 		curBestUtilityTime++;
 
@@ -54,9 +67,13 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	std::cout << std::endl << std::endl;
+
 	std::cout << "Generated generation count: " << generatedGenerationCount << std::endl << std::endl;
 
-	printBasket(generator.theBest());
+	printBasket(engine.theBest());
+
+	std::cout << "Average generation utility: " << averageUtility(engine) << std::endl;
 
 	std::cout << "Insert any text and press enter to exit from program: ";
 

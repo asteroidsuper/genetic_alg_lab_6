@@ -2,7 +2,7 @@
 
 #include "basket.h"
 
-class GenerationGenerator
+class GeneticEngine
 {
 	uint _generationSize = 20;
 	uint _generatingGenerationSize = 40;

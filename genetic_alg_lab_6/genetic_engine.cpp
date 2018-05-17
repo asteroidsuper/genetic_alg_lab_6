@@ -1,4 +1,4 @@
-#include "generation_generator.h"
+#include "genetic_engine.h"
 
 #include "random.h"
 
@@ -29,7 +29,7 @@ bool basketLess(const Basket& a, const Basket& b)
 	return a.utility() < b.utility();
 }
 
-void GenerationGenerator::generateRandomGeneration()
+void GeneticEngine::generateRandomGeneration()
 {
 	_currentGeneration.clear();
 
@@ -42,7 +42,7 @@ void GenerationGenerator::generateRandomGeneration()
 	}
 }
 
-void GenerationGenerator::toNextGeneration()
+void GeneticEngine::toNextGeneration()
 {
 	std::map<double, Basket> orderedAllBaskets;
 
@@ -74,7 +74,7 @@ void GenerationGenerator::toNextGeneration()
 		_currentGeneration.push_back(mapItem.second);
 }
 
-std::list<Basket> GenerationGenerator::generateNextGeneration() const
+std::list<Basket> GeneticEngine::generateNextGeneration() const
 {
 	if (_currentGeneration.size() < 2)
 		return { };
@@ -101,12 +101,12 @@ std::list<Basket> GenerationGenerator::generateNextGeneration() const
 	return generatingGeneration;
 }
 
-std::list<Basket> GenerationGenerator::currentGeneration() const
+std::list<Basket> GeneticEngine::currentGeneration() const
 {
 	return _currentGeneration;
 }
 
-Basket GenerationGenerator::theBest() const
+Basket GeneticEngine::theBest() const
 {
 	auto iterOnMax = std::max_element(_currentGeneration.cbegin(), _currentGeneration.cend(), basketLess);
 
@@ -116,7 +116,7 @@ Basket GenerationGenerator::theBest() const
 	return Basket();
 }
 
-bool GenerationGenerator::isInLimit(const Basket & basket) const
+bool GeneticEngine::isInLimit(const Basket & basket) const
 {
 	return basket.weight() <= _weightLimit && basket.cost() <= _costLimit;
 }

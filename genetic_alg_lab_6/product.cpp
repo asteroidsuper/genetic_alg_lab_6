@@ -33,8 +33,8 @@ const std::list<Product>& Product::defaultProducts()
     static std::list<Product> products
     {//         lstart  k       cost    weight  name
         Product(10,     0.6,    49,     1,      "Milk"),
-        Product(5,      0.7,    1,      0.6,    "Bread"),
-        Product(9,      0.5,    60,     0.3,    "Eggs"),
+        Product(5,      0.7,    22,     0.6,    "Bread"),
+        Product(9,      0.35,   60,     0.75,   "Eggs"),
         Product(3,      0.9,    50,     0.1,    "Tea"),
         Product(5,      0.4,    65,     1,      "Sugar"),
         Product(7,      0.45,   40,     0.3,    "Sour Cream"),

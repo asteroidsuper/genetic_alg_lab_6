@@ -1,6 +1,7 @@
 #include "random.h"
 
 #include <random>
+#include <chrono>
 
 auto& randomGenerator()
 {
