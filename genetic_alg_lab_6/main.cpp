@@ -32,15 +32,28 @@ double averageUtility(const GeneticEngine& engine)
 	return utilitySum / generation.size();
 }
 
+void seedRandomGenerating()
+{
+	std::cout << "Enter seed: ";
+	
+	std::string seed;
+
+	std::cin >> seed;
+
+	random::setRandomSeed(seed);
+}
+
 int main(int argc, char *argv[])
 {
-	random::setRandomSeed(256);
+	seedRandomGenerating();
 
 	GeneticEngine engine;
 
 	engine.generateRandomGeneration();
 
 	double curBestUtility = engine.theBest().utility();
+
+	std::cout << std::endl;
 
 	std::cout << "First generation best utility: " << curBestUtility << std::endl;
 	std::cout << "Average utility: " << averageUtility(engine) << std::endl;

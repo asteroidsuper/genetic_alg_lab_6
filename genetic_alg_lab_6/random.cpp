@@ -21,6 +21,13 @@ void random::setRandomSeed(uint seed)
 	generator.seed(seed);
 }
 
+void random::setRandomSeed(const std::string & seed)
+{
+	std::seed_seq seedSeq(seed.cbegin(), seed.cend());
+
+	randomGenerator().seed(seedSeq);
+}
+
 bool random::randomTrue(double change)
 {
 	return randomDouble() <= change;
